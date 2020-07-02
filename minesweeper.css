@@ -58,3 +58,14 @@ div.hidden:hover {
 div.marked, div.marked:hover {
   background: no-repeat center/60% url("images/mark.svg") deepskyblue;
 }
+
+div.win, div.win:hover {
+  background-color: green;
+}
+
+div.indicated, div.indicated:hover {
+  background: #ccc;
+}
+.warn {
+  color: red;
+}
