@@ -9,7 +9,7 @@ var rightButtonDown = false;
 var double = false;
 var blockLeft = false;
 var blockRight = false;
-var gameLevel = 6;
+var gameLevel = 4;
 
 function generateBoard(level){
   for (let i = 1; i <= level; i++){
@@ -37,7 +37,7 @@ function addMines(level){
   // Determine maximum number of mines that should be present
   switch(level){
     case 2:
-      maxMines = 2;
+      maxMines = 1;
       break;
     case 3:
       maxMines = 3;
@@ -82,6 +82,23 @@ function showMineCount(mineCount){
   
 }
 
+function changeDifficulty(evt){
+  if (evt.target.id == "easier"){
+    if (gameLevel > 2) {
+      gameLevel--;
+    } else {
+      alert("It can't go any easier, there's only 1 bomb!");
+    }
+    
+  } else if (evt.target.id == "harder") {
+    if (gameLevel < 6) {
+      gameLevel++;
+    } else {
+      alert("You're too good for me!");
+    }
+  }
+  resetGame();
+}
 function startGame () {
   mineCount = generateBoard(gameLevel);
   showMineCount(mineCount);
@@ -94,13 +111,14 @@ function startGame () {
   document.addEventListener('mousedown', checkClick);
   document.addEventListener('mouseup', checkClick);
   document.getElementById('reset').addEventListener('click', resetGame);
+  document.getElementById('easier').addEventListener('click', changeDifficulty);
+  document.getElementById('harder').addEventListener('click', changeDifficulty);
 
   // Don't remove this function call: it makes the game work!
   lib.initBoard()
 }
 
 function checkClick(evt){
-  let timer;
   if (evt.buttons == 3 && evt.type == 'mousedown' && double == false){
     hint(evt);
     double = true;

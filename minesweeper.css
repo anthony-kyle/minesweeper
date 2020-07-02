@@ -69,3 +69,6 @@ div.indicated, div.indicated:hover {
 .warn {
   color: red;
 }
+button {
+  margin: 1em;
+}
