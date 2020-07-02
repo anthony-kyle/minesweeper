@@ -6,7 +6,7 @@ var board = {
     {
       "row"     : 0,
       "col"     : 0,
-      "isMine"  : false,
+      "isMine"  : true,
       "hidden"  : true
     }, // Cell 1
     {
@@ -34,6 +34,10 @@ function startGame () {
   board.cells.forEach(cell => {
     cell.surroundingMines = countSurroundingMines(cell);
   }); // ForEach
+  // Add Event Listeners
+  document.addEventListener('click', checkForWin, false);
+  document.addEventListener('contextmenu', checkForWin, false);
+
   // Don't remove this function call: it makes the game work!
   lib.initBoard()
 }
@@ -43,13 +47,41 @@ function startGame () {
 // 1. Are all of the cells that are NOT mines visible?
 // 2. Are all of the mines marked?
 function checkForWin () {
+  // I chose to change the logic for the win condition, 
+  // as the goal is to successfully clear any non mined area
+  // and some players choose not to mark the mines, there would be
+  // no win condition, in that case. 
+  // Instead I validate if all non mine cells have been discovered
+  // for a win condition
+  console.log(new Error().stack);
+
+  let count = 0;
+  let passCondition = false;
+
+  board.cells.forEach(cell => {
+    if (passCondition == true) return;
+    // If Any non Mine Cell is not hidden Pass
+    if (cell.isMine == false && cell.hidden == true) {
+      passCondition = true;
+    };
+  })  
+  if (passCondition == true) return;    
+  board.cells.forEach(cell => {
+    if (cell.isMine == true){
+      markOnWin(cell);
+    }
+  })
+  lib.displayMessage('You win!');
+} // checkForWin()
 
 
-  // You can use this function call to declare a winner (once you've
-  // detected that they've won, that is!)
-  //   lib.displayMessage('You win!')
+function markOnWin(cell){
+  // Mark all mines on win!
+  let mineClass = "row-" + cell.row + " col-" + cell.col;
+  let mine = document.getElementsByClassName(mineClass);
+  mine[0].classList.toggle('marked');
+
 }
-
 // Define this function to count the number of mines around the cell
 // (there could be as many as 8). You don't have to get the surrounding
 // cells yourself! Just use `lib.getSurroundingCells`: 
