@@ -75,22 +75,22 @@ function getThisCellIndex(col, row){
 
 function showMineCount(mineCount){
   if (mineCount < 0){
-    document.getElementById("notes").innerHTML = '<span class="warn">' + mineCount + ' Marks Remaining</span>';
+    document.getElementById("notes").innerHTML = '<p class="warn"><img src="images/mark.svg" alt="marks" class="hint"> = ' + mineCount + '</p>';
   } else {
-    document.getElementById("notes").innerHTML = mineCount + " Marks Remaining";
+    document.getElementById("notes").innerHTML = '<p class="hint"><img src="images/mark.svg" alt="marks" class="hint"> = ' + mineCount + '</p>';
   }
   
 }
 
 function changeDifficulty(evt){
-  if (evt.target.id == "easier"){
+  if (evt.target.id == "easier" || evt.key == "-"){
     if (gameLevel > 2) {
       gameLevel--;
     } else {
       alert("It can't go any easier, there's only 1 bomb!");
     }
     
-  } else if (evt.target.id == "harder") {
+  } else if (evt.target.id == "harder" || evt.key == "=") {
     if (gameLevel < 6) {
       gameLevel++;
     } else {
@@ -110,6 +110,7 @@ function startGame () {
   // Add Event Listeners
   document.addEventListener('mousedown', checkClick);
   document.addEventListener('mouseup', checkClick);
+  document.addEventListener('keypress', validateKeyPress);
   document.getElementById('reset').addEventListener('click', resetGame);
   document.getElementById('easier').addEventListener('click', changeDifficulty);
   document.getElementById('harder').addEventListener('click', changeDifficulty);
@@ -127,13 +128,12 @@ function checkClick(evt){
     double=false;
     blockLeft = true;
     blockRight = true;
-  } else if (evt.buttons == 1 && double == false){
-    if (blockLeft != true) checkForWin(evt);
-    else blockRight = false;
-  } else if (evt.buttons == 2 && double == false){
-    if (blockRight != true)checkForWin(evt);
-    else blockRight = false;
-  }
+  } 
+  checkForWin(evt);
+}
+function validateKeyPress(evt){
+  if (evt.key == "n") resetGame();
+  if (evt.key == "-"  || evt.key == "=") changeDifficulty(evt);
 }
 
 function getCell(evt){
@@ -171,6 +171,7 @@ function showUnmarked(evt){
 }
 
 function showThisCell (cell, evt) {
+  evt.preventDefault();
   cell.hidden = false;
   cell.isMarked = false;
   let cellClass = "row-" + cell.row + " col-" + cell.col;
@@ -178,10 +179,15 @@ function showThisCell (cell, evt) {
   currCell.classList.remove('hidden');
   currCell.classList.remove('marked');
   if (cell.isMine == true) {
-    displayMessage('BOOM!')
-    revealMines()
-    removeListeners()
-    return
+    console.log("this method");
+    playAudio('bomb');
+    displayMessage('BOOM!');
+    revealMines(evt);
+    removeListeners();
+    evt.preventDefault();
+    return;
+  } else {
+    playAudio('click');
   }
   setInnerHTML(cell)
   if (cell.surroundingMines === 0) {
@@ -201,7 +207,6 @@ function toggleIndication(cell) {
 // 1. Are all of the cells that are NOT mines visible?
 // 2. Are all of the mines marked?
 function checkForWin (evt) {
-  console.log(evt);
   // I chose to change the logic for the win condition, 
   // as the goal is to successfully clear any non mined area
   // and some players choose not to mark the mines, there would be
@@ -226,6 +231,7 @@ function checkForWin (evt) {
     }
   })
   lib.displayMessage('You win!');
+  playAudio('win');
 } // checkForWin()
 
 // function revealCell(row, col){
@@ -267,4 +273,9 @@ function resetGame(){
   board.cells = [];
   document.getElementsByClassName('board')[0].innerHTML = " ";
   startGame();
+}
+
+// function to play sounds
+function playAudio(id){
+  document.getElementById(id).play();
 }

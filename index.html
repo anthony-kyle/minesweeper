@@ -8,12 +8,33 @@
     <script src="minesweeper.js"></script>
   </head>
   <body>
+    <audio id="bomb">
+      <source src="audio/bomb.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="mark">
+      <source src="audio/mark.wav" type="audio/wav">
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="reverse">
+      <source src="audio/reverse.wav" type="audio/wav">
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="click">
+      <source src="audio/click.wav" type="audio/wav">
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="win">
+      <source src="audio/win.ogg" type="audio/ogg">
+      Your browser does not support the audio element.
+    </audio>
     <div id="message"></div>
     <div id="notes"></div>
     <div class="board"></div>
-    <button id="easier">It's too Hard</button>
-    <button id="harder">It's too Easy</button>
-    <button id="reset">New Game</button>
-
+    <div id="buttons">
+      <button id="reset">New Game [N]</button>
+      <button id="easier">It's too Hard [-]</button>
+      <button id="harder">It's too Easy [=]</button>
+    </div>
   </body>
 </html>

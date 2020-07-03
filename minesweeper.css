@@ -23,6 +23,7 @@ body {
 .board {
   display: flex;
   flex-wrap: wrap;
+  user-select: none;
 }
 
 .board div {
@@ -66,9 +67,64 @@ div.win, div.win:hover {
 div.indicated, div.indicated:hover {
   background: #ccc;
 }
+
+.hint, .warn {
+  font-size: 20px;
+  line-height: 50px;
+  vertical-align: middle;
+}
 .warn {
   color: red;
 }
+
+.hint img, .warn img {
+  background-color: deepskyblue;
+  border-radius: 3px;
+  box-shadow: 2px 2px 4px darkgrey;
+  padding: 5px;
+  margin-right: 1em;
+  height: 40px;
+  width: auto;
+  float: left;
+}
+
+.warn img {
+  background-color: red;
+}
+
+#buttons {
+  margin-top: 1em;
+}
 button {
-  margin: 1em;
+    background-color: green; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 3px;
+    box-shadow: 2px 2px 4px darkgrey;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    transition: top 0.05s linear, left 0.05s linear;
+}
+button:hover  {
+  top: -2px;
+  left: -2px;
+  box-shadow: 4px 4px 4px darkgrey;
+
+}
+
+button:active  {
+  top: 2px;
+  left: 2px;
+  box-shadow: 0px 0px 4px darkgrey;
+
+}
+
+#easier {
+  background-color: rgba(125, 0, 40, 1);
 }
