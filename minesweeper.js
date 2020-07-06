@@ -11,6 +11,26 @@ var blockLeft = false;
 var blockRight = false;
 var gameLevel = 4;
 
+function getBoardChildren(){
+  return document.getElementsByClassName('board')[0];
+}
+
+function addGameListeners(){
+  let gameBoard = getBoardChildren();
+  for (let i = 0; i < gameBoard.children.length; i++){
+    gameBoard.children[i].addEventListener('mousedown', checkClick);
+    gameBoard.children[i].addEventListener('mouseup', checkClick);
+  }
+}
+
+function removeGameListeners(){
+  let gameBoard = getBoardChildren();
+  for (let i = 0; i < gameBoard.children.length; i++){
+    gameBoard.children[i].removeEventListener('mousedown', checkClick);
+    gameBoard.children[i].removeEventListener('mouseup', checkClick);
+  }
+}
+
 function generateBoard(level){
   for (let i = 1; i <= level; i++){
     for (let j = 1; j <= level; j++){
@@ -102,32 +122,28 @@ function changeDifficulty(evt){
 function startGame () {
   mineCount = generateBoard(gameLevel);
   showMineCount(mineCount);
-
-
   board.cells.forEach(cell => {
     cell.surroundingMines = countSurroundingMines(cell);
   }); // ForEach
+
+  // Don't remove this function call: it makes the game work!
+  lib.initBoard()
+
   // Add Event Listeners
-  document.addEventListener('mousedown', checkClick);
-  document.addEventListener('mouseup', checkClick);
   document.addEventListener('keypress', validateKeyPress);
   document.getElementById('reset').addEventListener('click', resetGame);
   document.getElementById('easier').addEventListener('click', changeDifficulty);
   document.getElementById('harder').addEventListener('click', changeDifficulty);
-
-  // Don't remove this function call: it makes the game work!
-  lib.initBoard()
+  addGameListeners(); 
 }
 
 function checkClick(evt){
-  if (evt.buttons == 3 && evt.type == 'mousedown' && double == false){
+  if (evt.buttons == 3 && evt.type == 'mousedown' && double == false) {
     hint(evt);
     double = true;
-  } else if (evt.type == 'mouseup' && double == true){
+  } else if (evt.type == 'mouseup' && double == true) {
     showUnmarked(evt);
-    double=false;
-    blockLeft = true;
-    blockRight = true;
+    double = false;
   } 
   checkForWin(evt);
 }
@@ -171,7 +187,6 @@ function showUnmarked(evt){
 }
 
 function showThisCell (cell, evt) {
-  evt.preventDefault();
   cell.hidden = false;
   cell.isMarked = false;
   let cellClass = "row-" + cell.row + " col-" + cell.col;
@@ -179,12 +194,12 @@ function showThisCell (cell, evt) {
   currCell.classList.remove('hidden');
   currCell.classList.remove('marked');
   if (cell.isMine == true) {
-    console.log("this method");
     playAudio('bomb');
     displayMessage('BOOM!');
     revealMines(evt);
-    removeListeners();
-    evt.preventDefault();
+    removeGameListeners();
+    //removeListeners();
+    //addGameListeners();
     return;
   } else {
     playAudio('click');
