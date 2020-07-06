@@ -7,9 +7,8 @@ var board = {
 var leftButtonDown = false;
 var rightButtonDown = false;
 var double = false;
-var blockLeft = false;
-var blockRight = false;
 var gameLevel = 4;
+var activeCell;
 
 function getBoardChildren(){
   return document.getElementsByClassName('board')[0];
@@ -160,22 +159,24 @@ function getCell(evt){
 }
 
 function hint(evt){
-  let cell = getCell(evt);
+  activeCell = getCell(evt);
+  let cell = activeCell;
+
   let surrounding = lib.getSurroundingCells(cell.row, cell.col);
   surrounding.forEach(surrCell => {
     if (surrCell.isMarked == false){
-      toggleIndication(surrCell);
+      toggleIndication(surrCell, evt);
     }
   })
 }
 
 function showUnmarked(evt){
   let count = 0;
-  let cell = getCell(evt);
+  let cell = activeCell;
   let surrounding = lib.getSurroundingCells(cell.row, cell.col);
   surrounding.forEach(cellCount =>{
     if(cellCount.isMarked) count++;
-    toggleIndication(cellCount);
+    toggleIndication(cellCount, evt);
   });
   if (count == cell.surroundingMines){
     surrounding.forEach(surrCell => {
@@ -210,11 +211,16 @@ function showThisCell (cell, evt) {
   }
 }
 
-function toggleIndication(cell) {
+function toggleIndication(cell, evt) {
   if (cell.isMarked == false && cell.hidden == true){
     let cellClass = "row-" + cell.row + " col-" + cell.col;
     let currCell = document.getElementsByClassName(cellClass)[0]; 
-    currCell.classList.toggle('indicated')
+    if (evt.type == 'mousedown'){
+      currCell.classList.add('indicated')
+    } else if (evt.type == 'mouseup'){
+      currCell.classList.remove('indicated')
+    }
+    
   }
 }
 // Define this function to look for a win condition:
