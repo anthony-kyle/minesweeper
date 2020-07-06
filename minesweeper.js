@@ -144,8 +144,8 @@ function checkClick(evt){
   } else if (evt.type == 'mouseup' && double == true) {
     showUnmarked(evt);
     double = false;
+    checkForWin(evt);
   } 
-  checkForWin(evt);
 }
 function validateKeyPress(evt){
   if (evt.key == "n") resetGame();
@@ -228,7 +228,6 @@ function checkForWin (evt) {
   // no win condition, in that case. 
   // Instead I validate if all non mine cells have been discovered
   // for a win condition
-
   let count = 0;
   let passCondition = false;
 
