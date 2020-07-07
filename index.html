@@ -1,80 +1,147 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>PilcrowMicro - Minesweeper</title>
-    <meta name="description" content="My take on the classic game. It's quite 'sweep'">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" 		sizes="57x57" 		href="https://anthony-kyle.github.io/images/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" 		sizes="60x60" 		href="https://anthony-kyle.github.io/images/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" 		sizes="72x72" 		href="https://anthony-kyle.github.io/images/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" 		sizes="76x76" 		href="https://anthony-kyle.github.io/images/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" 		sizes="114x114" 	href="https://anthony-kyle.github.io/images/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" 		sizes="120x120" 	href="https://anthony-kyle.github.io/images/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" 		sizes="144x144" 	href="https://anthony-kyle.github.io/images/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" 		sizes="152x152" 	href="https://anthony-kyle.github.io/images/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" 		sizes="180x180" 	href="https://anthony-kyle.github.io/images/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" 	sizes="192x192"  	href="https://anthony-kyle.github.io/images/android-icon-192x192.png">
-    <link rel="icon" type="image/png" 	sizes="32x32" 		href="https://anthony-kyle.github.io/images/favicon-32x32.png"	>
-    <link rel="icon" type="image/png" 	sizes="96x96" 		href="https://anthony-kyle.github.io/images/favicon-96x96.png"	>
-    <link rel="icon" type="image/png" 	sizes="16x16" 		href="https://anthony-kyle.github.io/images/favicon-16x16.png"	>
-    <meta name="msapplication-TileImage" content="https://anthony-kyle.github.io/images/ms-icon-144x144.png">
-  
-    <link href="https://fonts.googleapis.com/css2?family=Volkhov:wght@700&family=Oxygen&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/main.css">
-    <script src="https://anthony-kyle.github.io/js/functions.js"></script>
+<head>
+  <!-- Page Encoding -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link rel="stylesheet" href="minesweeper.css">
-    <script src="lib/tests.js"></script>
-    <script src="lib/lib.js"></script>
-    <script src="minesweeper.js"></script>
-  </head>
-  <body>
-    <header id="top">
-      <a href="/">
-        <img id="masthead" src="https://anthony-kyle.github.io/images/PilcrowMicroFull.png" alt="PilcrowMicro">
-      </a>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/blog.html">Blog Entries</a></li>
-            <li class="selected sub"><a href="/games.html">Games</a></li>
-            <li><a href="/contact.html">Contact Me</a></li>
-        </ul>
-    </nav>
-    <section class="body">
+  <!-- SEO Start -->
+  <title>PilcrowMicro - Minesweeper</title>
+  <meta name="description" content="My take on the classic game. It's quite 'sweep'">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- SEO End -->
+
+  <!-- Favicons Start -->
+  <link rel="apple-touch-icon" 		  sizes="57x57" 		href="https://anthony-kyle.github.io/images/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" 		  sizes="60x60" 		href="https://anthony-kyle.github.io/images/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" 		  sizes="72x72" 		href="https://anthony-kyle.github.io/images/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" 		  sizes="76x76" 		href="https://anthony-kyle.github.io/images/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" 		  sizes="114x114" 	href="https://anthony-kyle.github.io/images/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" 		  sizes="120x120" 	href="https://anthony-kyle.github.io/images/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" 		  sizes="144x144" 	href="https://anthony-kyle.github.io/images/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" 		  sizes="152x152" 	href="https://anthony-kyle.github.io/images/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" 		  sizes="180x180" 	href="https://anthony-kyle.github.io/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  	href="https://anthony-kyle.github.io/images/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" 		href="https://anthony-kyle.github.io/images/favicon-32x32.png"	>
+  <link rel="icon" type="image/png" sizes="96x96" 		href="https://anthony-kyle.github.io/images/favicon-96x96.png"	>
+  <link rel="icon" type="image/png" sizes="16x16" 		href="https://anthony-kyle.github.io/images/favicon-16x16.png"	>
+  <meta name="msapplication-TileImage" content="https://anthony-kyle.github.io/images/ms-icon-144x144.png">
+  <!-- Favicons End -->
+
+  <!-- API Includes -->
+  <link href="https://fonts.googleapis.com/css2?family=Volkhov:wght@700&family=Oxygen&display=swap" rel="stylesheet">
+
+  <!-- CSS Includes -->
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="minesweeper.css">
+
+  <!-- JavaScript Includes -->
+  <script src="https://anthony-kyle.github.io/js/functions.js"></script>
+  <script src="lib/tests.js"></script>
+  <script src="lib/lib.js"></script>
+  <script src="minesweeper.js"></script>
+</head>
+<body>
+
+  <header id="top">
+    <a href="/">
+      <img id="masthead" src="https://anthony-kyle.github.io/images/PilcrowMicroFull.png" alt="PilcrowMicro">
+    </a>
+  </header><!-- #top -->
+
+  <nav>
+      <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/blog.html">Blog Entries</a></li>
+          <li class="selected sub"><a href="/games.html">Games</a></li>
+          <li><a href="/contact.html">Contact Me</a></li>
+      </ul>
+  </nav><!-- nav -->
+
+  <section class="body">
+
+    <section id="audioLinks">
+
       <audio id="bomb">
         <source src="audio/bomb.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
-      </audio>
+      </audio><!-- #bomb -->
+
       <audio id="mark">
         <source src="audio/mark.wav" type="audio/wav">
         Your browser does not support the audio element.
-      </audio>
+      </audio><!-- #mark -->
+
       <audio id="reverse">
         <source src="audio/reverse.wav" type="audio/wav">
         Your browser does not support the audio element.
-      </audio>
+      </audio><!-- #reverse -->
+
       <audio id="click">
         <source src="audio/click.wav" type="audio/wav">
         Your browser does not support the audio element.
-      </audio>
+      </audio><!-- #click -->
+
       <audio id="win">
         <source src="audio/win.ogg" type="audio/ogg">
         Your browser does not support the audio element.
-      </audio>
-      <div id="message"></div>
-      <div id="notes"></div>
-      <div id="boardWrapper">
-        <div class="board"></div>
-      </div>
-      <div id="buttons">
-        <button id="reset">New Game [N]</button>
-        <button id="easier">It's too Hard [-]</button>
-        <button id="harder">It's too Easy [=]</button>
-      </div>
-    </section>
-  </body>
+      </audio><!-- #win -->
+
+    </section><!-- #audioLinks -->
+
+    <div id="message"></div><!-- #message -->
+
+    <div id="notes"></div><!-- #notes -->
+    
+    <div id="instructions">
+
+      <h4>How to Play Minesweeper</h4>
+      <h5>The Aim</h5>
+      <p>
+        The goal in minesweeper is to identify every place it is safe to stand in the minefield. In the aim of doing this, you can reveal spaces to see if they contain a mine, or you can mark a space to declare that you think a mine is there.
+      </p>
+
+      <h5>Revealing a Space</h5>
+      <p>
+        If you click on a square with your left mouse button, it will reveal a square. That square will either be blank, have a number in it, or have a mine in it. If it is a mine game over. Otherwise, the number (or lack therof) tells you how many immediately adjacent squares (laterally and diagonally) contain a mine.
+      </p>
+
+      <h5>Marking a space</h5>
+      <p>
+        If you believe a space contains a mine, right click on it and it will "flag" that space. Flagging a space is a reminder to you that a mine is there, however it does not prevent you from revealing that space if you wish.
+      </p>
+
+      <h5>Visualising Surrounding Mines</h5>
+      <p>
+        To easier be able to see which squares surround a particular space, simply click with both the left and right mouse buttons simultaneously to highlight the surrounding spaces.
+      </p>
+
+      <h5>Reveal Surrounding</h5>
+      <p>
+        If you proceed by marking the spaces you believe to be a mine, and you simultaneously click with both left and right mouse buttons to indicate, if the number in the cell you are clicking on is equal to the number of surrounding flags, the game will automatically reveal all unflagged hidden spaces.
+
+      </p>
+
+      <h5>Game End</h5>
+      <p>
+        At the end of the game, win or lose, all mines will be revealed. If you successfully identified a mine location, it will be green, however if a mine exploded, it will be red. Any incorrectly located flags will stay put.
+      </p>
+      <button id="hideInstructions">Hide Instructions</button>
+
+    </div><!-- #instructions -->
+    <div id="boardWrapper">
+      <div class="board"></div><!-- .board -->
+    </div><!-- #boardWrapper -->
+    
+    
+    <div id="buttons">
+      <button id="reset">New Game [N]</button>
+      <button id="easier">It's too Hard [-]</button>
+      <button id="harder">It's too Easy [=]</button>
+      <button id="showInstructions">?</button>
+    </div><!-- #buttons -->
+
+  </section><!-- .body-->
+  <footer><p>PilcrowMicro, Logo, Web design and Content &copy; Anthony McGrath 2020</p></footer>
+</body>
 </html>

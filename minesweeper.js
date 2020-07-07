@@ -1,38 +1,93 @@
+// ***********************************************************
+// minesweeper.js
+// Author: Anthony McGrath
+// Copyright: 07/07/2020
+// ***********************************************************
+
 document.addEventListener('DOMContentLoaded', startGame)
-// Define your `board` object here!
+
+//************************************************************* 
+// Global Variables
+//************************************************************* 
+
 var board = {
   cells: [] // cells[]
 }; // board{}
 
-var leftButtonDown = false;
-var rightButtonDown = false;
-var double = false;
-var gameLevel = 4;
-var activeCell;
+var gameLevel = 4;  // Default Difficulty level. Can be between 2-6
+var double = false; // Switch for handling dual click
+var activeCell;     // Placeholder for storing current active cell on dual click
+// End Globals
+
+//************************************************************* 
+// Game board generation
+//************************************************************* 
+
+function startGame () {
+  // Perform game initialisation
+  mineCount = generateBoard(gameLevel);     // Generate game board return # mines
+  showMineCount(mineCount);                 // Update flag count
+
+  board.cells.forEach(cell => {             // Populate cell mine count
+    cell.surroundingMines = countSurroundingMines(cell);
+  }); // ForEach
+
+  // Don't remove this function call: it makes the game work!
+  lib.initBoard()
+
+  // Add global Event Listeners
+  document.addEventListener('keypress', validateKeyPress);
+  document.getElementById('reset').addEventListener('click', resetGame);
+  document.getElementById('easier').addEventListener('click', changeDifficulty);
+  document.getElementById('harder').addEventListener('click', changeDifficulty);
+  document.getElementById('showInstructions').addEventListener('click', showInstructions);
+  document.getElementById('hideInstructions').addEventListener('click', hideInstructions);
+  
+  // Add game play listeners
+  addGameListeners(); 
+} // startGame()
+
+// Function to reset game
+function resetGame(){
+  board.cells = [];
+  document.getElementsByClassName('board')[0].innerHTML = " ";
+  startGame();
+} // resetGame()
+
+function countSurroundingMines(cell) {
+  // Count surrounding mines 
+  // Update cell object
+  let surrounding = lib.getSurroundingCells(cell.row, cell.col);
+  let count=0;
+  surrounding.forEach(mine => {
+    if (mine.isMine) count++;
+  }); // foreach
+  return count;
+} // countSurroundingMines(cell)
 
 function getBoardChildren(){
   return document.getElementsByClassName('board')[0];
-}
+} // getBoardChildren()
 
 function addGameListeners(){
   let gameBoard = getBoardChildren();
   for (let i = 0; i < gameBoard.children.length; i++){
     gameBoard.children[i].addEventListener('mousedown', checkClick);
     gameBoard.children[i].addEventListener('mouseup', checkClick);
-  }
-}
+  } // for
+} // addGameListeners()
 
 function removeGameListeners(){
   let gameBoard = getBoardChildren();
   for (let i = 0; i < gameBoard.children.length; i++){
     gameBoard.children[i].removeEventListener('mousedown', checkClick);
     gameBoard.children[i].removeEventListener('mouseup', checkClick);
-  }
-}
+  } // for
+} // removeGameListeners
 
 function generateBoard(level){
-  for (let i = 1; i <= level; i++){
-    for (let j = 1; j <= level; j++){
+  for (let i = 1; i <= level; i++){     
+    for (let j = 1; j <= level; j++){   
         board.cells.push({
           "row": i,
           "col": j,
@@ -40,10 +95,10 @@ function generateBoard(level){
           "hidden": true,
           "isMarked": false
         });
-    }
-  }
+    } // for column
+  } // for row
   return addMines(level);
-}
+} // generateBoard(level)
 
 function addMines(level){
   let maxMines = 0;
@@ -70,7 +125,7 @@ function addMines(level){
     case 6:
       maxMines = 12;
       break;
-  }
+  } // Switch(level)
 
   // Allocate Mines to board
   for(let i = 0; i < maxMines; i++){
@@ -78,96 +133,74 @@ function addMines(level){
     row = Math.ceil(Math.random() * level);
     needle = col + ":" + row;
     if (mineLocations.indexOf(needle) > -1) {
-      i--;
+      i--; // Pretend loop never happened if mine exists already
     } else {
       cellInx = getThisCellIndex(col, row);
       board.cells[cellInx].isMine = true;
       mineLocations.push(needle);
-    }
-  }
+    } // if
+  } // for
   return maxMines;
-}
+} // addMines(level)
 
 function getThisCellIndex(col, row){
   return row * gameLevel + col - gameLevel -1;
-}
+} // getThisCellIndex(col, row)
 
 function showMineCount(mineCount){
   if (mineCount < 0){
     document.getElementById("notes").innerHTML = '<p class="warn"><img src="images/mark.svg" alt="marks" class="hint"> = ' + mineCount + '</p>';
   } else {
     document.getElementById("notes").innerHTML = '<p class="hint"><img src="images/mark.svg" alt="marks" class="hint"> = ' + mineCount + '</p>';
-  }
-  
-}
+  } // if-else
+} // showMineCount(mineCount)
 
-function changeDifficulty(evt){
-  if (evt.target.id == "easier" || evt.key == "-"){
-    if (gameLevel > 2) {
-      gameLevel--;
-    } else {
-      alert("It can't go any easier, there's only 1 bomb!");
-    }
-    
-  } else if (evt.target.id == "harder" || evt.key == "=") {
-    if (gameLevel < 6) {
-      gameLevel++;
-    } else {
-      alert("You're too good for me!");
-    }
-  }
-  resetGame();
-}
-function startGame () {
-  mineCount = generateBoard(gameLevel);
-  showMineCount(mineCount);
-  board.cells.forEach(cell => {
-    cell.surroundingMines = countSurroundingMines(cell);
-  }); // ForEach
 
-  // Don't remove this function call: it makes the game work!
-  lib.initBoard()
+//************************************************************* 
+// Key Presses / Associated Functions
+//************************************************************* 
 
-  // Add Event Listeners
-  document.addEventListener('keypress', validateKeyPress);
-  document.getElementById('reset').addEventListener('click', resetGame);
-  document.getElementById('easier').addEventListener('click', changeDifficulty);
-  document.getElementById('harder').addEventListener('click', changeDifficulty);
-  addGameListeners(); 
-}
-
-function checkClick(evt){
-  if (evt.buttons == 3 && evt.type == 'mousedown' && double == false) {
-    hint(evt);
-    double = true;
-  } else if (evt.type == 'mouseup' && double == true) {
-    showUnmarked(evt);
-    double = false;
-    checkForWin(evt);
-  } 
-}
 function validateKeyPress(evt){
+  // Process Key Presses 
   if (evt.key == "n") resetGame();
   if (evt.key == "-"  || evt.key == "=") changeDifficulty(evt);
 }
 
-function getCell(evt){
-  let row = parseInt(evt.target.classList[0].substr(4));
-  let col = parseInt(evt.target.classList[1].substr(4));
-  let idx = getThisCellIndex(col, row);
-  return board.cells[idx];
-}
+function changeDifficulty(evt){
+  if (evt.target.id == "easier" || evt.key == "-"){
+    // Reduce Game Level
+    if (gameLevel > 2) {
+      gameLevel--;
+    } else {
+      alert("It can't go any easier, there's only 1 bomb!");
+    } // if-else
+  } else if (evt.target.id == "harder" || evt.key == "=") {
+    // Increase Game Level
+    if (gameLevel < 6) {
+      gameLevel++;
+    } else {
+      alert("You're too good for me!");
+    } // if-else
+  } // if-elseif
+  resetGame();
+} // changeDifficulty(evt)
 
-function hint(evt){
-  activeCell = getCell(evt);
-  let cell = activeCell;
+//************************************************************* 
+// Mouse Clicks / Associated Functions
+//************************************************************* 
 
-  let surrounding = lib.getSurroundingCells(cell.row, cell.col);
-  surrounding.forEach(surrCell => {
-    if (surrCell.isMarked == false){
-      toggleIndication(surrCell, evt);
-    }
-  })
+function checkClick(evt){
+  // Handle dual click
+  if (evt.buttons == 3 && evt.type == 'mousedown' && double == false) {
+    // Both mouse buttons down, indicate surrounding cells
+    double = true;
+    hint(evt);
+  } else if (evt.type == 'mouseup' && double == true) {
+    // Both mouse buttons up, process reveal
+    double = false;
+    showUnmarked(evt);
+    checkForWin(evt);
+  } // if-elseif
 }
 
 function showUnmarked(evt){
@@ -187,31 +220,22 @@ function showUnmarked(evt){
   }
 }
 
-function showThisCell (cell, evt) {
-  cell.hidden = false;
-  cell.isMarked = false;
-  let cellClass = "row-" + cell.row + " col-" + cell.col;
-  let currCell = document.getElementsByClassName(cellClass)[0];
-  currCell.classList.remove('hidden');
-  currCell.classList.remove('marked');
-  if (cell.isMine == true) {
-    playAudio('bomb');
-    displayMessage('BOOM!');
-    revealMines(evt);
-    removeGameListeners();
-    //removeListeners();
-    //addGameListeners();
-    return;
-  } else {
-    playAudio('click');
-  }
-  setInnerHTML(cell)
-  if (cell.surroundingMines === 0) {
-    showSurrounding(evt.target)
-  }
-}
+function hint(evt){
+  // Store event cell to handle pending mouseup event later on
+  activeCell = getCell(evt); 
+
+  // indicate surrounding hidden cells on dual click with class
+  let cell = activeCell;
+  let surrounding = lib.getSurroundingCells(cell.row, cell.col);
+  surrounding.forEach(surrCell => {
+    if (surrCell.isMarked == false){
+      toggleIndication(surrCell, evt);
+    } // if
+  }) // forEach(surrCell)
+} // hint(evt)
 
 function toggleIndication(cell, evt) {
+  // Add / Remove class indicated on specified cell
   if (cell.isMarked == false && cell.hidden == true){
     let cellClass = "row-" + cell.row + " col-" + cell.col;
     let currCell = document.getElementsByClassName(cellClass)[0]; 
@@ -219,32 +243,77 @@ function toggleIndication(cell, evt) {
       currCell.classList.add('indicated')
     } else if (evt.type == 'mouseup'){
       currCell.classList.remove('indicated')
-    }
-    
-  }
-}
-// Define this function to look for a win condition:
-//
-// 1. Are all of the cells that are NOT mines visible?
-// 2. Are all of the mines marked?
-function checkForWin (evt) {
-  // I chose to change the logic for the win condition, 
-  // as the goal is to successfully clear any non mined area
-  // and some players choose not to mark the mines, there would be
-  // no win condition, in that case. 
-  // Instead I validate if all non mine cells have been discovered
-  // for a win condition
-  let count = 0;
-  let passCondition = false;
+    } // if-elseif
+  } // if
+} // toggleIndication(cell, evt)
+
+// function to play sounds
+function playAudio(id){
+  document.getElementById(id).play();
+} // playAudio(id)
+
+//************************************************************* 
+// Cell Functions
+//************************************************************* 
+
+function getCell(evt){
+  // Return the clicked cell's object
+  let row = parseInt(evt.target.classList[0].substr(4));
+  let col = parseInt(evt.target.classList[1].substr(4));
+  let idx = getThisCellIndex(col, row);
+  return board.cells[idx];
+} // getCell(evt)
+
+function showThisCell (cell, evt) {
+  // Update Cell Properties
+  cell.hidden = false;
+  cell.isMarked = false;
+
+  // Find DOM object based on row / col class
+  let cellClass = "row-" + cell.row + " col-" + cell.col;
+  let currCell = document.getElementsByClassName(cellClass)[0];
+
+  // Update DOM Object class
+  currCell.classList.remove('hidden');
+  currCell.classList.remove('marked');
+
+  // handle if cell is a mine / select audio cue
+  if (cell.isMine == true) {
+    playAudio('bomb');
+    displayMessage('BOOM!');
+    revealMines(evt);
+    removeGameListeners();
+    return;
+  } else {
+    playAudio('click');
+  } // if-else
+
+  // Update cell contents
+  setInnerHTML(cell)
+  if (cell.surroundingMines === 0) {
+    showSurrounding(evt.target)
+  } // if
+} // showThisCell(cell, evt)
+
+function checkForWin () {
+  // Check current board state
+  // evaluate win condition not met
+  // Win conditions: 
+  //  - All non mine cells revealed
+  //  - Mines do not need to be marked
+
+  let loseCondition = false;
 
   board.cells.forEach(cell => {
-    if (passCondition == true) return;
+    if (loseCondition == true) return;
     // If Any non Mine Cell is not hidden Pass
     if (cell.isMine == false && cell.hidden == true) {
-      passCondition = true;
+      loseCondition = true;
     };
-  })  
-  if (passCondition == true) return;    
+  }) // forEach 
+  if (loseCondition == true) return;
+
+  // No lose condition found, game won.
   board.cells.forEach(cell => {
     if (cell.isMine == true){
       markOnWin(cell);
@@ -253,12 +322,6 @@ function checkForWin (evt) {
   lib.displayMessage('You win!');
   playAudio('win');
 } // checkForWin()
-
-// function revealCell(row, col){
-//   let mineClass = "row-" + cell.row + " col-" + cell.col;
-//   let mine = document.getElementsByClassName(mineClass);
-//   mine[0].classList.remove("hidden");
-// }
 
 function markOnWin(cell){
   // Mark all mines on win!
@@ -269,33 +332,15 @@ function markOnWin(cell){
   mine[0].classList.add('win');
   mine[0].classList.remove("hidden");
   mine[0].classList.remove("marked");
+} // checkForWin()
 
-}
-// Define this function to count the number of mines around the cell
-// (there could be as many as 8). You don't have to get the surrounding
-// cells yourself! Just use `lib.getSurroundingCells`: 
-//
-//   var surrounding = lib.getSurroundingCells(cell.row, cell.col)
-//
-// It will return cell objects in an array. You should loop through 
-// them, counting the number of times `cell.isMine` is true.
-function countSurroundingMines (cell) {
-  let surrounding = lib.getSurroundingCells(cell.row, cell.col);
-  let count=0;
-  surrounding.forEach(mine => {
-    if (mine.isMine) count++;
-  });
-  return count;
-}
+//************************************************************* 
+// Help Functions
+//************************************************************* 
+function showInstructions(){
+  document.getElementById('instructions').style.display = "block";
+} // showInstructions()
 
-// Function to reset game
-function resetGame(){
-  board.cells = [];
-  document.getElementsByClassName('board')[0].innerHTML = " ";
-  startGame();
-}
-
-// function to play sounds
-function playAudio(id){
-  document.getElementById(id).play();
-}
+function hideInstructions(){
+  document.getElementById('instructions').style.display = "none";
+} // hideInstructions()
