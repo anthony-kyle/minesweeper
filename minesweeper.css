@@ -8,6 +8,7 @@ html, body {
   align-items: center;
   justify-content: flex-center;
   flex-direction: column;
+  margin-bottom: 2em;
 }
 
 #message, #notes {
