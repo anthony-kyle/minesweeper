@@ -1,62 +1,43 @@
 <!DOCTYPE html>
-<html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
 <head>
-  <!-- Page Encoding -->
+	<!-- Page Encoding -->
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- SEO Start -->
-  <title>PilcrowMicro - Minesweeper</title>
-  <meta name="description" content="My take on the classic game. It's quite 'sweep'">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- SEO End -->
+	<script>
+		// Define Page Properties
+		title = "Minesweeper";
+		parent = "Blog";
+		description = "My take on the classic game. It's quite 'sweep'"
+		path = "../";
+	</script>
 
-  <!-- Favicons Start -->
-  <link rel="apple-touch-icon" 		  sizes="57x57" 		href="https://anthony-kyle.github.io/images/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" 		  sizes="60x60" 		href="https://anthony-kyle.github.io/images/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" 		  sizes="72x72" 		href="https://anthony-kyle.github.io/images/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" 		  sizes="76x76" 		href="https://anthony-kyle.github.io/images/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" 		  sizes="114x114" 	href="https://anthony-kyle.github.io/images/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" 		  sizes="120x120" 	href="https://anthony-kyle.github.io/images/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" 		  sizes="144x144" 	href="https://anthony-kyle.github.io/images/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" 		  sizes="152x152" 	href="https://anthony-kyle.github.io/images/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" 		  sizes="180x180" 	href="https://anthony-kyle.github.io/images/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192"  	href="https://anthony-kyle.github.io/images/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" 		href="https://anthony-kyle.github.io/images/favicon-32x32.png"	>
-  <link rel="icon" type="image/png" sizes="96x96" 		href="https://anthony-kyle.github.io/images/favicon-96x96.png"	>
-  <link rel="icon" type="image/png" sizes="16x16" 		href="https://anthony-kyle.github.io/images/favicon-16x16.png"	>
-  <meta name="msapplication-TileImage" content="https://anthony-kyle.github.io/images/ms-icon-144x144.png">
-  <!-- Favicons End -->
+	<!-- Include Common Head Features -->
+  <script type="text/JavaScript" src="../includes/commonHead.js"></script>  
+  
 
-  <!-- API Includes -->
-  <link href="https://fonts.googleapis.com/css2?family=Volkhov:wght@700&family=Oxygen&display=swap" rel="stylesheet">
-
-  <!-- CSS Includes -->
-  <link rel="stylesheet" href="/styles/main.css">
+  <!-- MineSweeper Includes -->
   <link rel="stylesheet" href="minesweeper.css">
-
-  <!-- JavaScript Includes -->
-  <script src="https://anthony-kyle.github.io/js/functions.js"></script>
   <script src="lib/tests.js"></script>
   <script src="lib/lib.js"></script>
   <script src="minesweeper.js"></script>
 </head>
 <body>
+	<!-- Masthead -->
+	<header id="top">
+		<a href="/">
+			<img id="masthead" src="../images/PilcrowMicroFull.png" alt="PilcrowMicro">
+		</a>
+	</header>
 
-  <header id="top">
-    <a href="/">
-      <img id="masthead" src="https://anthony-kyle.github.io/images/PilcrowMicroFull.png" alt="PilcrowMicro">
-    </a>
-  </header><!-- #top -->
-
-  <nav>
-      <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/blog.html">Blog Entries</a></li>
-          <li class="selected sub"><a href="/games.html">Games / Tools</a></li>
-          <li><a href="/contact.html">Contact Me</a></li>
-      </ul>
-  </nav><!-- nav -->
+	<!-- Navigation -->
+	<script type="text/JavaScript" src="../includes/nav.js"></script>
 
   <section class="body">
 
@@ -142,6 +123,7 @@
     </div><!-- #buttons -->
 
   </section><!-- .body-->
-  <footer><p>PilcrowMicro, Logo, Web design and Content &copy; Anthony McGrath 2020</p></footer>
+  <!-- Include Footer -->
+	<script type="text/JavaScript" src="../includes/footer.js"></script>
 </body>
 </html>
