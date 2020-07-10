@@ -237,7 +237,7 @@ function hint(evt){
 function toggleIndication(cell, evt) {
   // Add / Remove class indicated on specified cell
   if (cell.isMarked == false && cell.hidden == true){
-    let cellClass = "row-" + cell.row + " col-" + cell.col;
+    let cellClass = "msRow-" + cell.row + " msCol-" + cell.col;
     let currCell = document.getElementsByClassName(cellClass)[0]; 
     if (evt.type == 'mousedown'){
       currCell.classList.add('indicated')
@@ -258,8 +258,8 @@ function playAudio(id){
 
 function getCell(evt){
   // Return the clicked cell's object
-  let row = parseInt(evt.target.classList[0].substr(4));
-  let col = parseInt(evt.target.classList[1].substr(4));
+  let row = parseInt(evt.target.classList[0].substr(6));
+  let col = parseInt(evt.target.classList[1].substr(6));
   let idx = getThisCellIndex(col, row);
   return board.cells[idx];
 } // getCell(evt)
@@ -270,7 +270,7 @@ function showThisCell (cell, evt) {
   cell.isMarked = false;
 
   // Find DOM object based on row / col class
-  let cellClass = "row-" + cell.row + " col-" + cell.col;
+  let cellClass = "msRow-" + cell.row + " msCol-" + cell.col;
   let currCell = document.getElementsByClassName(cellClass)[0];
 
   // Update DOM Object class
@@ -325,7 +325,7 @@ function checkForWin () {
 
 function markOnWin(cell){
   // Mark all mines on win!
-  let mineClass = "row-" + cell.row + " col-" + cell.col;
+  let mineClass = "msRow-" + cell.row + " msCol-" + cell.col;
   let mine = document.getElementsByClassName(mineClass);
   
   mine[0].classList.add('mine');
