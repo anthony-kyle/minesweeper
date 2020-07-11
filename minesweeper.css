@@ -101,6 +101,10 @@ div.indicated, div.indicated:hover {
 #buttons {
   margin-top: 1em;
 }
+
+#buttons .col-sm {
+  text-align: center;
+}
 button {
     background-color: green; /* Green */
     border: none;
@@ -108,10 +112,10 @@ button {
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
     font-size: 16px;
     border-radius: 3px;
     box-shadow: 2px 2px 4px darkgrey;
+    margin: 1em auto 0px auto;
     position: relative;
     top: 0px;
     left: 0px;
