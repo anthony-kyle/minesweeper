@@ -15,12 +15,12 @@
     var page = {
 			title: "Minesweeper", // page title
 			description: "My take on the classic game. It's quite 'sweep'", // page meta description
-			path: "/site/" // set path to how to find root directory
+			path: "../" // set path to how to find root directory
 		};
 	</script>
 
 	<!-- Include Common Head Features -->
-  <script type="text/JavaScript" src="/site/includes/commonHead.js"></script>  
+  <script type="text/JavaScript" src="../includes/commonHead.js"></script>  
   
 
   <!-- MineSweeper Includes -->
@@ -33,12 +33,12 @@
 	<!-- Masthead -->
 	<header id="top">
 		<a href="/">
-			<img id="masthead" src="/site/images/PilcrowMicroFull.png" alt="PilcrowMicro">
+			<img id="masthead" src="../images/PilcrowMicroFull.png" alt="PilcrowMicro">
 		</a>
 	</header>
 
 	<!-- Navigation -->
-	<script type="text/JavaScript" src="/site/includes/nav.js"></script>
+	<script type="text/JavaScript" src="../includes/nav.js"></script>
 
   <section class="body container pt-5 pb-5">
     
@@ -116,11 +116,11 @@
     </div><!-- #boardWrapper -->
     
     
-    <div id="buttons row" class="text-center">
-      <span class="col-sm"><button id="reset">New Game [ F2 ]</button></span>
-      <span class="col-sm"><button id="easier">It's too Hard [ - ]</button></span>
-      <span class="col-sm"><button id="harder">It's too Easy [ = ]</button></span>
-      <span class="col-sm"><button id="showInstructions">Instructions [ i ]</button></span>
+    <div id="buttons row">
+      <span class="col-sm"><button id="reset">New Game [N]</button></span>
+      <span class="col-sm"><button id="easier">It's too Hard [-]</button></span>
+      <span class="col-sm"><button id="harder">It's too Easy [=]</button></span>
+      <span class="col-sm"><button id="showInstructions">?</button></span>
       
       
       
@@ -129,6 +129,6 @@
 
   </section><!-- .body-->
   <!-- Include Footer -->
-	<script type="text/JavaScript" src="/site/includes/footer.js"></script>
+	<script type="text/JavaScript" src="../includes/footer.js"></script>
 </body>
 </html>
