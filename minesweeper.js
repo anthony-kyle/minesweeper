@@ -36,12 +36,12 @@ function startGame () {
   lib.initBoard()
 
   // Add global Event Listeners
-  document.addEventListener('keypress', validateKeyPress);
+  document.addEventListener('keydown', validateKeyPress);
   document.getElementById('reset').addEventListener('click', resetGame);
   document.getElementById('easier').addEventListener('click', changeDifficulty);
   document.getElementById('harder').addEventListener('click', changeDifficulty);
-  document.getElementById('showInstructions').addEventListener('click', showInstructions);
-  document.getElementById('hideInstructions').addEventListener('click', hideInstructions);
+  document.getElementById('showInstructions').addEventListener('click', toggleInstructions);
+  document.getElementById('hideInstructions').addEventListener('click', toggleInstructions);
   
   // Add game play listeners
   addGameListeners(); 
@@ -149,9 +149,9 @@ function getThisCellIndex(col, row){
 
 function showMineCount(mineCount){
   if (mineCount < 0){
-    document.getElementById("notes").innerHTML = '<p class="warn"><img src="images/mark.svg" alt="marks" class="hint"> = ' + mineCount + '</p>';
+    document.getElementById("notes").innerHTML = '<p class="warn"><img src="images/redflag.png" alt="marks" class="hint"> = ' + mineCount + '</p>';
   } else {
-    document.getElementById("notes").innerHTML = '<p class="hint"><img src="images/mark.svg" alt="marks" class="hint"> = ' + mineCount + '</p>';
+    document.getElementById("notes").innerHTML = '<p class="hint"><img src="images/flag.png" alt="marks" class="hint"> = ' + mineCount + '</p>';
   } // if-else
 } // showMineCount(mineCount)
 
@@ -162,19 +162,20 @@ function showMineCount(mineCount){
 
 function validateKeyPress(evt){
   // Process Key Presses 
-  if (evt.key == "n") resetGame();
-  if (evt.key == "-"  || evt.key == "=") changeDifficulty(evt);
+  if (evt.key == "F2") resetGame();
+  if (evt.key == "i") toggleInstructions();
+  if (evt.key == "-" || evt.key == "_" || evt.key == "+" || evt.key == "=") changeDifficulty(evt);
 }
 
 function changeDifficulty(evt){
-  if (evt.target.id == "easier" || evt.key == "-"){
+  if (evt.target.id == "easier" || evt.key == "-" || evt.key == "_"){
     // Reduce Game Level
     if (gameLevel > 2) {
       gameLevel--;
     } else {
       alert("It can't go any easier, there's only 1 bomb!");
     } // if-else
-  } else if (evt.target.id == "harder" || evt.key == "=") {
+  } else if (evt.target.id == "harder" || evt.key == "+" || evt.key == "=") {
     // Increase Game Level
     if (gameLevel < 6) {
       gameLevel++;
@@ -337,10 +338,11 @@ function markOnWin(cell){
 //************************************************************* 
 // Help Functions
 //************************************************************* 
-function showInstructions(){
-  document.getElementById('instructions').style.display = "block";
-} // showInstructions()
-
-function hideInstructions(){
-  document.getElementById('instructions').style.display = "none";
-} // hideInstructions()
+function toggleInstructions(){
+  var instructions = document.getElementById('instructions');
+  if (instructions.style.display === "none"){
+    instructions.style.display = "block";
+  } else {
+    instructions.style.display = "none";
+  }
+} // toggleInstructions()
