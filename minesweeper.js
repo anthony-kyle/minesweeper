@@ -339,7 +339,7 @@ function markOnWin(cell){
 // Help Functions
 //************************************************************* 
 function toggleInstructions(){
-  var instructions = document.getElementById('instructions');
+  console.log(instructions.style.display);
   if (instructions.style.display === "none"){
     instructions.style.display = "block";
   } else {

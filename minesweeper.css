@@ -106,7 +106,7 @@ div.indicated, div.indicated:hover {
 #buttons .col-sm {
   text-align: center;
 }
-.col-sm button {
+.col-sm button, #hideInstructions {
     background-color: rgba(64, 9, 96, 0.6);
     border: none;
     width: 190px;
@@ -123,13 +123,13 @@ div.indicated, div.indicated:hover {
     left: 0px;
     transition: top 0.05s linear, left 0.05s linear;
 }
-.col-sm button:hover  {
+.col-sm button:hover, #hideInstructions:hover  {
   top: -1px;
   left: -1px;
   box-shadow: 4px 4px 4px darkgrey;
 }
 
-.col-sm button:active  {
+.col-sm button:active, #hideInstructions:active  {
   top: 1px;
   left: 1px;
   box-shadow: 0px 0px 4px darkgrey;
